@@ -6,6 +6,10 @@ A simple React app with three dependant-on-each-other selects. Depending on opti
   <img src="https://github.com/MatSaf123/boxes-app/assets/56278688/fa2a21c5-5bdd-42cb-9d72-b01375be5e93" alt="box parts selectors"/>
 </p>
 
+## How to run it
+
+Clone the repo, run `npm i` in root directory of the project, and then `npm start` to run it on localhost.
+
 ## Available Scripts
 
 In the project directory, you can run:

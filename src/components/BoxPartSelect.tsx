@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { PartOption } from "../App";
+import { PartOption } from "../types";
 import { BoxCodenamePartSelectWrapper } from "./style";
 
 export const BoxCodenamePartSelect = (props: {

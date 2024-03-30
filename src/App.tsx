@@ -4,18 +4,7 @@ import { selectBoxCodenameParts } from "./selectors";
 import { useEffect, useMemo, useState } from "react";
 import { BoxCodenamePartSelect } from "./components/BoxPartSelect";
 import { setBoxCodename } from "./index"; // TODO: this seems like a bad idea, to import from index
-
-// TODO: create a file for all types
-
-export interface Part {
-  name: string;
-  dependencies?: string[]; // What previous option has to be selected in order to make this option available?
-}
-
-export interface PartOption {
-  value: Part;
-  label: string;
-}
+import { PartOption } from "./types";
 
 export const boxCodenamePartOneOptions: PartOption[] = [
   { value: { name: "Box A" }, label: "Box A" },
@@ -77,14 +66,14 @@ export function App() {
         options={boxCodenamePartOneOptions}
         placeholder={"Select part one"}
         selected={selectedPartOne}
-        onChange={(selectedOption) => {
+        onChange={(selectedOption: PartOption | null) => {
           setSelectedPartOne(selectedOption ?? undefined);
           if (selectedOption != null) {
-            // Clean part two and part three if they're not null because
+            // Clean part two and part three becasue we need to show options with correct dependencies after change
             if (partTwo != null) {
               setSelectedPartTwo(null);
+              // TODO: clean part three in future
             }
-            // TODO: clean part three in future
             // TODO: update filter for part two?
           }
         }}
@@ -94,10 +83,9 @@ export function App() {
         placeholder={"Select part two"}
         selected={selectedPartTwo}
         isDisabled={partOne == null}
-        onChange={(selectedOption) => {
+        onChange={(selectedOption: PartOption | null) => {
           if (selectedOption != null) {
             setSelectedPartTwo(selectedOption ?? null);
-            // dispatch(setPartTwo(selectedOption.value.name));
           }
         }}
       />

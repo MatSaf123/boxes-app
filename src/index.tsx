@@ -4,12 +4,7 @@ import { App } from "./App";
 
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-
-interface BoxCodenameState {
-  partOne?: string | null;
-  partTwo?: string | null;
-  partThree?: string | null;
-}
+import { BoxCodenamePayload, BoxCodenameState } from "./types";
 
 const boxCodenameSliceInitialState: BoxCodenameState = {
   partOne: undefined,
@@ -17,14 +12,7 @@ const boxCodenameSliceInitialState: BoxCodenameState = {
   partThree: undefined,
 };
 
-// TODO: move this type to types file
-interface BoxCodenamePayload {
-  partOne?: string | null | undefined;
-  partTwo?: string | null | undefined;
-  partThree?: string | null | undefined;
-}
-
-// TODO: type. how?
+// TODO: Add type to this... how?
 const boxCodenameSlice = createSlice({
   name: "counter",
   initialState: boxCodenameSliceInitialState,
@@ -39,7 +27,6 @@ const boxCodenameSlice = createSlice({
 
 export const { setBoxCodename } = boxCodenameSlice.actions;
 
-// TODO: type
 export const store = configureStore({
   reducer: { boxCodename: boxCodenameSlice.reducer },
 });

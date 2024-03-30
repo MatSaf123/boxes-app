@@ -50,7 +50,7 @@ export const boxCodenamePartThreeOptions: PartOption[] = [
       partOneDependencies: ["Box B"],
       partTwoDependencies: ["Thing 2", "Thing 3"],
     },
-    label: "Bar (needs BoxB, Thing 2&3)",
+    label: "Bar (needs BoxB, Thing 2 or 3)",
   },
   {
     value: {
@@ -58,7 +58,15 @@ export const boxCodenamePartThreeOptions: PartOption[] = [
       partOneDependencies: ["Box C"],
       partTwoDependencies: ["Thing 4", "Thing 5"],
     },
-    label: "Baz (needs BoxC, Thing 4&5)",
+    label: "Baz (needs BoxC, Thing 4 or 5)",
+  },
+  {
+    value: {
+      name: "Tar",
+      partOneDependencies: ["Box C"],
+      partTwoDependencies: ["Thing 1"],
+    },
+    label: "Tar (needs BoxC, Thing 1)",
   },
 ];
 

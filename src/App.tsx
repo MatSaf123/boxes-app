@@ -51,8 +51,8 @@ export function App() {
   // TODO: resolve selector-returned-diff-value-with-same-params warning
   const [partOne, partTwo, partThree] = useSelector(selectBoxCodenameParts);
 
-  const [selectedPartOne, setSelectedPartOne] = useState<PartOption>();
-  const [selectedPartTwo, setSelectedPartTwo] = useState<PartOption>();
+  const [selectedPartOne, setSelectedPartOne] = useState<PartOption | null>();
+  const [selectedPartTwo, setSelectedPartTwo] = useState<PartOption | null>();
 
   const boxCodename = useMemo(
     () =>
@@ -80,11 +80,9 @@ export function App() {
         onChange={(selectedOption) => {
           setSelectedPartOne(selectedOption ?? undefined);
           if (selectedOption != null) {
-            // dispatch(setPartOne(selectedOption.value.name));
             // Clean part two and part three if they're not null because
             if (partTwo != null) {
-              // dispatch(setPartTwo(null));
-              setSelectedPartTwo(undefined);
+              setSelectedPartTwo(null);
             }
             // TODO: clean part three in future
             // TODO: update filter for part two?
@@ -98,7 +96,7 @@ export function App() {
         isDisabled={partOne == null}
         onChange={(selectedOption) => {
           if (selectedOption != null) {
-            setSelectedPartTwo(selectedOption ?? undefined);
+            setSelectedPartTwo(selectedOption ?? null);
             // dispatch(setPartTwo(selectedOption.value.name));
           }
         }}

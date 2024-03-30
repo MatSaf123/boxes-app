@@ -7,7 +7,7 @@ export const BoxCodenamePartSelect = (props: {
   placeholder?: string;
   onChange?: (newOption: PartOption | null) => void;
   isDisabled?: boolean;
-  selected?: PartOption;
+  selected?: PartOption | null;
 }) => (
   <BoxCodenamePartSelectWrapper>
     {/* TODO: idk how to properly style Select comp. without breaking props,

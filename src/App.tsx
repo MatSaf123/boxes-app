@@ -14,24 +14,51 @@ export const boxCodenamePartOneOptions: PartOption[] = [
 
 export const boxCodenamePartTwoOptions: PartOption[] = [
   {
-    value: { name: "Thing 1", dependencies: ["Box A"] },
-    label: "Thing 1 comp. with Box A",
+    value: { name: "Thing 1", partOneDependencies: ["Box A"] },
+    label: "Thing 1 (needs Box A)",
   },
   {
-    value: { name: "Thing 2", dependencies: ["Box A"] },
-    label: "Thing 2 comp. with Box A",
+    value: { name: "Thing 2", partOneDependencies: ["Box A"] },
+    label: "Thing 2 (needs Box A)",
   },
   {
-    value: { name: "Thing 3", dependencies: ["Box B"] },
-    label: "Thing 3 comp. with Box B",
+    value: { name: "Thing 3", partOneDependencies: ["Box B"] },
+    label: "Thing 3 (needs Box B)",
   },
   {
-    value: { name: "Thing 4", dependencies: ["Box A", "Box B"] },
-    label: "Thing 4 comp. with Boxes A & B",
+    value: { name: "Thing 4", partOneDependencies: ["Box A", "Box B"] },
+    label: "Thing 4 (needs Box A or B)",
   },
   {
-    value: { name: "Thing 5", dependencies: ["Box C"] },
-    label: "Thing 5 comp. with Box C",
+    value: { name: "Thing 5", partOneDependencies: ["Box C"] },
+    label: "Thing 5 (needs Box C)",
+  },
+];
+
+export const boxCodenamePartThreeOptions: PartOption[] = [
+  {
+    value: {
+      name: "Foo",
+      partOneDependencies: ["Box A"],
+      partTwoDependencies: ["Thing 1"],
+    },
+    label: "Foo (needs BoxA, Thing 1)",
+  },
+  {
+    value: {
+      name: "Bar",
+      partOneDependencies: ["Box B"],
+      partTwoDependencies: ["Thing 2", "Thing 3"],
+    },
+    label: "Bar (needs BoxB, Thing 2&3)",
+  },
+  {
+    value: {
+      name: "Baz",
+      partOneDependencies: ["Box C"],
+      partTwoDependencies: ["Thing 4", "Thing 5"],
+    },
+    label: "Baz (needs BoxC, Thing 4&5)",
   },
 ];
 
@@ -42,6 +69,8 @@ export function App() {
 
   const [selectedPartOne, setSelectedPartOne] = useState<PartOption | null>();
   const [selectedPartTwo, setSelectedPartTwo] = useState<PartOption | null>();
+  const [selectedPartThree, setSelectedPartThree] =
+    useState<PartOption | null>();
 
   const boxCodename = useMemo(
     () =>
@@ -53,9 +82,22 @@ export function App() {
   const availablePartsTwo = useMemo(
     () =>
       boxCodenamePartTwoOptions.filter((option) =>
-        option.value.dependencies?.includes(selectedPartOne?.value.name ?? "")
+        option.value.partOneDependencies?.includes(
+          selectedPartOne?.value.name ?? ""
+        )
       ),
     [partOne]
+  );
+
+  // TODO: same as above
+  const availablePartsThree = useMemo(
+    () =>
+      boxCodenamePartThreeOptions.filter((option) =>
+        option.value.partTwoDependencies?.includes(
+          selectedPartTwo?.value.name ?? ""
+        )
+      ),
+    [partOne, partTwo]
   );
 
   useEffect(() => {
@@ -63,9 +105,10 @@ export function App() {
       setBoxCodename({
         partOne: selectedPartOne?.value.name,
         partTwo: selectedPartTwo?.value.name,
+        partThree: selectedPartThree?.value.name,
       })
     );
-  }, [selectedPartOne, selectedPartTwo]);
+  }, [selectedPartOne, selectedPartTwo, selectedPartThree]);
 
   return (
     <MainContainer>
@@ -77,11 +120,11 @@ export function App() {
         selected={selectedPartOne}
         onChange={(selectedOption: PartOption | null) => {
           setSelectedPartOne(selectedOption ?? undefined);
-          if (selectedOption != null) {
-            // Clean part two and part three becasue we need to show options with correct dependencies after change
-            if (partTwo != null) {
+          if (selectedOption != null && selectedOption != selectedPartOne) {
+            // Clean part two and part three because we need to show options with correct dependencies after change
+            if (partTwo != null || partThree != null) {
               setSelectedPartTwo(null);
-              // TODO: clean part three in future
+              setSelectedPartThree(null);
             }
           }
         }}
@@ -92,8 +135,23 @@ export function App() {
         selected={selectedPartTwo}
         isDisabled={partOne == null}
         onChange={(selectedOption: PartOption | null) => {
-          if (selectedOption != null) {
+          if (selectedOption != null && selectedOption != selectedPartTwo) {
             setSelectedPartTwo(selectedOption ?? null);
+            // Clean part three because we need to show options with correct dependencies after change
+            if (partThree != null) {
+              setSelectedPartThree(null);
+            }
+          }
+        }}
+      />
+      <BoxCodenamePartSelect
+        options={availablePartsThree}
+        placeholder={"Select part three"}
+        selected={selectedPartThree}
+        isDisabled={partTwo == null}
+        onChange={(selectedOption: PartOption | null) => {
+          if (selectedOption != null && selectedOption != selectedPartThree) {
+            setSelectedPartThree(selectedOption ?? null);
           }
         }}
       />

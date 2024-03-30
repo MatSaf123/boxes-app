@@ -12,7 +12,9 @@ export interface BoxCodenamePayload {
 
 export interface Part {
   name: string;
-  dependencies?: string[]; // What previous option has to be selected in order to make this option available?
+  // What previous option has to be selected in order to make this option available?
+  partOneDependencies?: string[];
+  partTwoDependencies?: string[];
 }
 
 export interface PartOption {

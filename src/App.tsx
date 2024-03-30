@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectBoxCodenameParts } from "./selectors";
 import { useEffect, useMemo, useState } from "react";
 import { BoxCodenamePartSelect } from "./components/BoxPartSelect";
-import { setPartOne, setPartThree, setPartTwo } from ".";
+import { setBoxCodename } from "./index"; // TODO: this seems like a bad idea, to import from index
 
 // TODO: create a file for all types
 
@@ -57,12 +57,17 @@ export function App() {
   const boxCodename = useMemo(
     () =>
       (partOne ?? "**") + "/" + (partTwo ?? "**") + "/" + (partThree ?? "**"),
-    [partOne, partTwo, partThree],
+    [partOne, partTwo, partThree]
   );
 
-  useEffect(() => (
-        dispatch(setBoxCodename)
-      ), [selectedPartOne, selectedPartTwo]);
+  useEffect(() => {
+    dispatch(
+      setBoxCodename({
+        partOne: selectedPartOne?.value.name,
+        partTwo: selectedPartTwo?.value.name,
+      })
+    );
+  }, [selectedPartOne, selectedPartTwo]);
 
   return (
     <MainContainer>

@@ -19,28 +19,25 @@ const boxCodenameSliceInitialState: BoxCodenameState = {
 
 // TODO: move this type to types file
 interface BoxCodenamePayload {
-  partA?: string;
-  partB?: string;
-  partC?: string;
+  partOne?: string | null | undefined;
+  partTwo?: string | null | undefined;
+  partThree?: string | null | undefined;
 }
 
-// TODO: type
+// TODO: type. how?
 const boxCodenameSlice = createSlice({
   name: "counter",
   initialState: boxCodenameSliceInitialState,
   reducers: {
-    setBoxCodename: (
-      state,
-      { payload }: { payload: BoxCodenamePayload },
-    ) => {
-      state.boxCodename.partOne = payload.partA;
-      state.boxCodename.partTwo = payload.partB;
-      state.boxCodename.partThree = payload.partC;
+    setBoxCodename: (state, { payload }: { payload: BoxCodenamePayload }) => {
+      state.partOne = payload.partOne;
+      state.partTwo = payload.partTwo;
+      state.partThree = payload.partThree;
     },
   },
 });
 
-export const {} = boxCodenameSlice.actions;
+export const { setBoxCodename } = boxCodenameSlice.actions;
 
 // TODO: type
 export const store = configureStore({
@@ -50,7 +47,7 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
+  document.getElementById("root") as HTMLElement
 );
 
 root.render(
@@ -58,5 +55,5 @@ root.render(
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

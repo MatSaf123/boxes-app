@@ -12,7 +12,6 @@ const boxCodenameSliceInitialState: BoxCodenameState = {
   partThree: undefined,
 };
 
-// TODO: Add type to this... how?
 const boxCodenameSlice = createSlice({
   name: "counter",
   initialState: boxCodenameSliceInitialState,

@@ -49,6 +49,15 @@ export function App() {
     [partOne, partTwo, partThree]
   );
 
+  // TODO: I can probably put logic below into useMemo above
+  const availablePartsTwo = useMemo(
+    () =>
+      boxCodenamePartTwoOptions.filter((option) =>
+        option.value.dependencies?.includes(selectedPartOne?.value.name ?? "")
+      ),
+    [partOne]
+  );
+
   useEffect(() => {
     dispatch(
       setBoxCodename({
@@ -74,12 +83,11 @@ export function App() {
               setSelectedPartTwo(null);
               // TODO: clean part three in future
             }
-            // TODO: update filter for part two?
           }
         }}
       />
       <BoxCodenamePartSelect
-        options={boxCodenamePartTwoOptions}
+        options={availablePartsTwo}
         placeholder={"Select part two"}
         selected={selectedPartTwo}
         isDisabled={partOne == null}
